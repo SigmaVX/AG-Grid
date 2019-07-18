@@ -4,7 +4,7 @@ import "./App.css";
 // AG Grid Imports
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-balham.css";
+import "ag-grid-community/dist/styles/ag-theme-blue.css";
 import "ag-grid-enterprise";
 
 class App extends Component {
@@ -42,6 +42,7 @@ class App extends Component {
       headerName: "Model",
       field: "model",
       cellRenderer: "agGroupCellRenderer",
+      // Options For Grouped Rows
       cellRendererParams: {
         checkbox: true
       }
@@ -99,7 +100,7 @@ class App extends Component {
   render() {
     return (
       <div
-        className="ag-theme-balham"
+        className="ag-theme-blue"
         style={{ height: "500px", width: "600px" }}
       >
         <button onClick={this.onButtonClick}>Get Selected Rows</button>
