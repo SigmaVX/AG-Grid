@@ -5,6 +5,7 @@ import "./App.css";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
+import "ag-grid-enterprise";
 
 class App extends Component {
   state = {
@@ -14,9 +15,14 @@ class App extends Component {
       {
         headerName: "Make",
         field: "make",
+        // Add Sort
         sortable: true,
+        // Add Filter
         filter: true,
-        checkboxSelection: true
+        // Add Select Checkboxes
+        checkboxSelection: true,
+        // Group By Row Toggle
+        rowGroup: false
       },
       {
         headerName: "Model",
@@ -31,31 +37,39 @@ class App extends Component {
         filter: true
       }
     ],
+    // Sets Row Grouping Display
+    autoGroupColumnDef: {
+      headerName: "Model",
+      field: "model",
+      cellRenderer: "agGroupCellRenderer",
+      cellRendererParams: {
+        checkbox: true
+      }
+    },
     // Row Data For Grid - Array of Objects
     // Object key names match field names in ColumnDefs
-    rowData: []
-    // rowData: [
-    //   {
-    //     make: "Toyota",
-    //     model: "Celica",
-    //     price: 35000
-    //   },
-    //   {
-    //     make: "Ford",
-    //     model: "Mondeo",
-    //     price: 32000
-    //   },
-    //   {
-    //     make: "Porsche",
-    //     model: "Boxter",
-    //     price: 72000
-    //   }
-    // ]
+    rowData: [
+      {
+        make: "Toyota",
+        model: "Celica",
+        price: 35000
+      },
+      {
+        make: "Ford",
+        model: "Mondeo",
+        price: 32000
+      },
+      {
+        make: "Porsche",
+        model: "Boxter",
+        price: 72000
+      }
+    ]
   };
 
   componentDidMount() {
     // Mock API Call For Data
-    fetch("https://api.myjson.com/bins/15psn9")
+    fetch("https://api.myjson.com/bins/ly7d1")
       .then(result => result.json())
       .then(rowData => {
         console.log(rowData);
@@ -94,6 +108,10 @@ class App extends Component {
           columnDefs={this.state.columnDefs}
           // Data Rows
           rowData={this.state.rowData}
+          // Allow Select To Group Rows
+          groupSelectsChildren={true}
+          // Sets Display For Grouping Based On State Object
+          autoGroupColumnDef={this.state.autoGroupColumnDef}
           // Allow Select Muliple Rows With Checkboxes
           rowSelection="multiple"
           // Access To AG Grid API For Saving Selected Data
